@@ -13,6 +13,19 @@
 			"item": [
 				{
 					"name": "Get API status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.expect(pm.response.code).to.equal(200);\r",
+									"}); "
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [
@@ -151,7 +164,8 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									""
+									"const response = pm.response.json();\r",
+									"console.log(response['product-description']);"
 								],
 								"type": "text/javascript"
 							}
@@ -532,12 +546,16 @@
 		},
 		{
 			"key": "apiKey",
-			"value": "ENTER A VALID API KEY"
+			"value": ""
 		},
 		{
 			"key": "baseUrl",
 			"value": "https://valentinos-coffee.herokuapp.com",
 			"type": "string"
+		},
+		{
+			"key": "orderId",
+			"value": ""
 		}
 	]
 }
