@@ -83,6 +83,25 @@
 			"item": [
 				{
 					"name": "Get all products",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Get all products\", function () {     \r",
+									"    pm.expect(pm.response.code).to.equal(200);\r",
+									"    \r",
+									"    var responseBody = pm.response.json();\r",
+									"    pm.expect(responseBody).to.be.an('object');\r",
+									"    pm.expect(responseBody.totalResults, \"Total Results\").to.be.eql(33);\r",
+									"    console.log(responseBody);\r",
+									"    \r",
+									"}); "
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [
@@ -165,7 +184,14 @@
 							"script": {
 								"exec": [
 									"const response = pm.response.json();\r",
-									"console.log(response['product-description']);"
+									"console.log(response['product-description']);\r",
+									"\r",
+									"pm.test(\"Get single product\", function(){\r",
+									"\r",
+									"    pm.expect(response['product-description']).to.be.eql(\"A rich, dark, and full-bodied coffee with a bold flavor and intense aroma.\");\r",
+									"\r",
+									"\r",
+									"});"
 								],
 								"type": "text/javascript"
 							}
@@ -377,6 +403,26 @@
 				},
 				{
 					"name": "Get all orders",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Get all orders\", function() {\r",
+									"   \r",
+									"   const respBody = pm.response.json();\r",
+									"\r",
+									"   console.log(respBody);\r",
+									"   \r",
+									"   pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json; charset=utf-8');\r",
+									"   pm.expect(typeof(respBody)).is.equal(\"object\")\r",
+									"\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [
@@ -404,7 +450,14 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									""
+									"pm.test(\"Get by Id\", function () {\r",
+									"    \r",
+									"    pm.expect(pm.response.code).to.equal(200);\r",
+									"\r",
+									"    const respBody = pm.response.json();\r",
+									"\r",
+									"    pm.expect(respBody.id, \"OrderId\").to.be.eql(pm.collectionVariables.get(\"orderId\"));\r",
+									"});"
 								],
 								"type": "text/javascript"
 							}
@@ -439,7 +492,7 @@
 							"variable": [
 								{
 									"key": "orderId",
-									"value": "K9JTFXPWQ"
+									"value": "{{orderId}}"
 								}
 							]
 						}
